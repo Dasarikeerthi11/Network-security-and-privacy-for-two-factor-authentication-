@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+// Simulating a user database
+struct User {
+char username[50];
+char password[50];
+char otpSecret[10]; // Secret for one-time password generation
+};
+// Simulating a function to generate a one-time password (OTP)
+int generateOTP() {
+// Simplified OTP generation, actual implementation would involve
+cryptographic algorithms
+return rand() % 1000000;
+}
+// Simulating a function to send OTP to the user (via email, SMS, etc.)
+void sendOTP(int otp) {
+printf("OTP: %06d\n", otp);
+}
+// Function to authenticate user with 2FA
+int authenticateUser(struct User* user) {
+char enteredPassword[50];
+printf("Enter your password: ");
+scanf("%s", enteredPassword);
+// Check the entered password
+if (strcmp(enteredPassword, user->password) != 0) {
+printf("Incorrect password\n");
+return 0; // Authentication failed
+}
+// Password is correct, generate and send OTP
+int otp = generateOTP();
+sendOTP(otp);
+// Simulating user entering OTP
+int enteredOTP;
+printf("Enter OTP: ");
+scanf("%d", &enteredOTP);
+// Check the entered OTP
+if (enteredOTP != otp) {
+printf("Incorrect OTP\n");
+return 0; // Authentication failed
+}
+// Authentication successful
+printf("Authentication successful\n");
+return 1;
+}
+10
+int main() {
+// Simulating a user
+struct User user;
+strcpy(user.username, "example_user");
+strcpy(user.password, "strong_password");
+strcpy(user.otpSecret, "secret123");
+// Authenticate user with 2FA
+int authenticationResult = authenticateUser(&user);
+if (authenticationResult) {
+// Proceed with secure operations
+printf("Access granted\n");
+} else {
+// Access denied
+printf("Access denied\n");
+}
+return 0;
+}
